@@ -1,0 +1,24 @@
+/* history section */
+#form-div {
+  /* background-color: #2d3748; */
+  background-color: #feffff;
+  height: 72%;
+  margin-top: 2%;
+  border-radius: 10px;
+}
+
+.example-card{
+  font-family: 'Merriweather',serif;
+  font-weight: 300;
+  font-size: 130%;
+}
+
+/* load more message hover css */
+.load-more-message {
+  background-color: #1b5e20;
+  color: white;
+}
+.load-more-message:hover {
+  background-color: #66bb6a;
+  color: black;
+}

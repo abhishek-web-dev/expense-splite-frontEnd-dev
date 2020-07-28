@@ -1,0 +1,117 @@
+<!-- expense details -->
+<div class="container mt-5" *ngIf="expenseData.length != 0">
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar></div>
+      <mat-card-title>Name : {{expenseData[0].ename}}</mat-card-title> <br>
+      <mat-card-title>Amount : {{expenseData[0].amount | currency:'INR'}}</mat-card-title> <br>
+      <mat-card-subtitle style="color: black;">Created By {{expenseData[0].creatorName}} on
+        {{expenseData[0].createdOn | amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}} <br>
+        Last Updated By {{expenseData[0].updatedByName}} on
+        {{expenseData[0].updatedOn | amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row" style="margin-left: auto;margin-right: auto;width: 85%;">
+        <div class="col-12 col-md-5">
+          <h2>These persons have paid the amount:</h2>
+          <ol>
+            <li *ngFor="let data of expenseData[0].contributer">
+              {{data.name | titlecase}} : {{data.amount | currency:'INR'}}
+            </li>
+          </ol>
+        </div>
+        <div class="col-12 col-md-6">
+          <h2>Amount has distributed between these persons:</h2>
+
+          <ol>
+            <ng-container *ngFor="let data of expenseData[0].distributer">
+              <li *ngIf="data.distributed">
+                {{data.name | titlecase}}
+              </li>
+            </ng-container>
+          </ol>
+        </div>
+      </div>
+
+      <!-- split balance -->
+      <div style="margin-left: 52px;">
+        <mat-card-title class=" my-1">Split Balance</mat-card-title>
+        <ol class="mt-2">
+          <li *ngFor="let data of splitArray2">
+            <ng-template [ngIf]="data.amount">
+              <b>{{data.payerName | titlecase}}</b> has to pay <b>{{data.amount | currency:'INR'}}</b> to
+              <b>{{data.reciverName | titlecase}}</b>.
+            </ng-template>
+            <ng-template [ngIf]="!data.amount">
+              <b>{{data.name | titlecase}}</b> has already payid his contribution.
+            </ng-template>
+          </li>
+        </ol>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="pb-2">
+      <button mat-flat-button class="bg-dark text-white ml-3" (click)="goBack()">Go Back</button>
+      <button type="button" mat-flat-button class="bg-success text-white ml-3" (click)="openEditExpenseDialog()">Edit
+        Expense</button>
+      <button type="button" mat-flat-button class="bg-danger text-white ml-3 mt-sm-0 mt-1" (click)="deleteExpense()">
+        Delete Expense</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- History section is starting-->
+<section class="container pb-4">
+  <mat-card id="form-div" style="margin-top: 50px;">
+    <h2 class=" text-black mt-2 ml-2 " style="font-size:200%;">
+      Expense History
+    </h2>
+
+    <!-- comment message virtual scrolling start -->
+    <cdk-virtual-scroll-viewport itemSize="50" style="width: 100%;height: 500px;margin-top: 30px;">
+
+      <div *cdkVirtualFor="let data of allHistoryData">
+        <div class="card text-white my-3"
+          style="background-color: #075E54;width: 96%;margin-left: auto;margin-right: auto;">
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p style="color: #eeeeee;font-weight: 300;font-family: 'Merriweather',
+                 serif;font-style: italic;font-size: 110%;line-height: 30px;">
+                {{data.message}}.</p>
+            </blockquote>
+          </div>
+          <div class="card-footer text-right mr-2">
+            <mat-icon class="material-icons mr-2" style="font-size: 110%;">access_time</mat-icon>
+            <small style="color: #C5C6C7;font-size: 115%;">
+              {{data.createdOn | amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+            </small>
+          </div>
+        </div>
+      </div>
+
+    </cdk-virtual-scroll-viewport>
+
+    <!-- Alert no more post -->
+    <div class="row pt-3 ">
+      <div class="col-md-12 d-flex justify-content-center">
+        <div class="text-black h6-alert p-2 ">
+          <button class="load-more-message" (click)="getMoreHistory()" mat-raised-button>
+            Load More Messages
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</section>
+
+<!-- sinner -->
+<div style="margin-top: 2%;">
+  <div class="col">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-spin" [fullScreen]="true">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div id="main-div" class="scrollBar">
+  <nav id="mainNavbar" class="navbar navbar-expand-sm navbar-light">
+    <div class="container-fluid">
+      <a class=" text-white navbar-brand">Expense Splitte App</a>
+      <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        (click)="collapsed = !this.collapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarSupportedContent" [ngClass]="{ collapse: collapsed, 'navbar-collapse': true }">
+        <!-- right nav menus -->
+        <ul class="navbar-nav ml-auto">
+          <li routerLinkActive="active" class="nav-item mr-3">
+            <a class=" nav-link active text-white" routerLink="/login">
+              Login
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li routerLinkActive="active" class="nav-item">
+            <a class=" nav-link" routerLink="/signup">
+              <span class="text-white">Signup</span>
+            </a>
+          </li>
+          <li routerLinkActive="active" class="nav-item">
+            <a class=" nav-link" routerLink="/about">
+              <span class="text-white">About</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- router outlet -->
+  <router-outlet></router-outlet>
+</div>

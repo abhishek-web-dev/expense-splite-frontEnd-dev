@@ -1,0 +1,26 @@
+/* extending bootstrap class */
+#main-div {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  background-color: #1a202c;
+}
+
+.navbar-brand {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+}
+.text-white {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+}
+
+#mainNavbar {
+  background-color: #2d3748;
+  color: white;
+}
+
+.icons {
+  color: white;
+  font-size: 180%;
+}

@@ -1,0 +1,35 @@
+<div class="container text-center" *ngIf="dropdownList.length !==0 ">
+  <h1 mat-dialog-title>Edit Group</h1>
+  <div mat-dialog-content style="height: 300px;">
+
+    <form [formGroup]="editGroupForm">
+
+      <!-- enter group name -->
+      <mat-form-field class="mb-2">
+        <mat-label>Enter Group Name</mat-label>
+        <input matInput formControlName="gname">
+      </mat-form-field>
+
+      <br>
+
+      <!-- select group member -->
+      <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Add Friends'" [data]="dropdownList"
+        [(ngModel)]="selectedItems" 
+        formControlName="groupMemberIds">
+      </ng-multiselect-dropdown>
+    </form>
+
+
+
+  </div>
+  <div mat-dialog-actions style="margin-left: 70px;margin-top: 3px;color: white;">
+    <button mat-button (click)="onNoClick()" class="bg-danger">No Thanks</button>
+    <button mat-button [mat-dialog-close]="editGroupForm.value" class="ml-2 bg-success mt-sm-0 mt-1"
+      cdkFocusInitial>Save</button>
+  </div>
+</div>
+
+<!-- spinner -->
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "timer" [fullScreen] = "true">
+  <p style="color: white" > Loading... </p></ngx-spinner>
+

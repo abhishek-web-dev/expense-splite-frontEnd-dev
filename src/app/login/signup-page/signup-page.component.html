@@ -1,0 +1,51 @@
+<div class="main-div">
+
+  <!-- start signup form -->
+  <div id="form-div">
+    <form id="login-form" [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)">
+      <h2 class="pb-2">Signup</h2>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter Name">
+
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email">
+      </div>
+
+      <div class="form-group" formGroupName="mobile">
+        <label for="mobno">Mobile Number</label>
+
+        <mat-select formControlName="code" [(ngModel)]="defaultSelected" class="bg-light mb-1"
+          style="height: 30px;border-radius: 5px;">
+          <mat-option *ngFor="let data of countryCode" [value]="data.code" class="w-50 ml-2 ">
+            <span>{{data.name}}</span>
+          </mat-option>
+        </mat-select>
+
+        <div>
+
+          <input type="text" class="form-control" id="mobno" formControlName="number" placeholder="Mobile Number">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="password"
+          placeholder="Enter Password">
+      </div>
+
+      <!-- Signup Button -->
+      <div class="row mt-1">
+        <div class="col-md-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-success btn-lg" [disabled]="!signupForm.valid">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <!-- end of signup form -->
+
+</div>

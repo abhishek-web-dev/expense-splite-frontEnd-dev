@@ -1,0 +1,32 @@
+
+<div class="container text-center">
+    <h1 mat-dialog-title>Create New Group</h1>
+<div mat-dialog-content>
+
+  <form [formGroup]="createGroupForm">
+
+    <!-- enter group name -->
+    <mat-form-field>
+        <mat-label>Enter Group Name</mat-label>
+        <input matInput  formControlName="gname">
+      </mat-form-field>
+    
+      <br>
+    
+      <!-- select group member -->
+      <mat-form-field>
+        <mat-label>Add Members</mat-label>
+        <mat-select formControlName="groupMemberIds" multiple>
+          <mat-option *ngFor="let data of allUserDetails" [value]="data">{{data.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  </form>
+
+
+
+</div>
+<div mat-dialog-actions style="margin-left: 70px;margin-top: 3px;color: white;">
+  <button mat-button (click)="onNoClick()" class="bg-danger">No Thanks</button>
+  <button mat-button [mat-dialog-close]="createGroupForm.value" class="ml-2 bg-success"  cdkFocusInitial>Create</button>
+</div>
+</div>

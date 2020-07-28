@@ -1,0 +1,62 @@
+<div style="height: 100%;">
+  <div class="container row">
+    <div class="col-12 col-sm-9">
+      <h1 class="text-white text-center mt-3">Your all groups</h1>
+    </div>
+    <div class="col-12 col-sm-3 text-center">
+      <button type="button" class="btn btn-light mt-3" (click)="openDialog()">Create Group</button>
+    </div>
+  </div>
+  
+  
+  <!-- infinite scroll div -->
+  <div class="container mt-2" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()" >
+  
+  
+    <div *ngFor="let data of allGroups" class="py-2">
+  
+      <!-- Create new group -->
+      <a [routerLink]="['group',data.groupId]" style="text-decoration: none;">
+        <mat-card class="main-card">
+          <mat-card-header>
+            <div class="row">
+              <div class="col-3">
+                <div style="background-color: blueviolet;width: 50px;height: 50px;border-radius: 50%;">
+                  <div style="color: white;padding-top: 10px;margin-left: 18px;font-size: 20px;">
+                    {{data.gname[0].toUpperCase()}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-9">
+                <mat-card-title>{{data.gname}}</mat-card-title>
+                <mat-card-subtitle><i>Created By : {{data.creatorName}}</i></mat-card-subtitle>
+              </div>
+            </div>
+          </mat-card-header>
+        </mat-card>
+      </a>
+  
+    </div>
+  
+  
+    <!-- sinner -->
+    <div style="margin-top: 2%;">
+      <div class="col">
+        <ngx-spinner bdOpacity=0.9 bdColor="" size="medium" color="#fff" type="ball-pulse-sync" [fullScreen]="false">
+          <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+      </div>
+    </div>
+  
+    <!-- Alert no more post -->
+    <div class="row pb-5" *ngIf="!notEmptyPost">
+      <div class="col-md-12 d-flex justify-content-center">
+        <div class="text-black h6-alert alert-secondary p-2 "> No More Groups To Show</div>
+      </div>
+    </div>
+  
+  </div>
+  <!-- infinity scroll div end -->
+  
+</div>

@@ -1,0 +1,33 @@
+.main-div {
+    background-color: #f8f8f8;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 10%;
+  }
+  
+  
+  .p-text {
+    font-size: 150%;
+  }
+  
+  /* Extra small devices (portrait phones, less than 576px) */
+  @media (max-width: 575.98px) {
+    .p-404 {
+      font-size: 150%;
+      font-weight: 500;
+    }
+    .p-lost {
+      font-size: 150%;
+      font-weight: 400;
+    }
+  
+    .p-text {
+      font-size: 110%;
+    }
+  
+    .btn{
+        font-size: 100%;
+        padding: 8px;
+    }
+  }
+  

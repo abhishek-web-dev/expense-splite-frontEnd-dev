@@ -1,0 +1,104 @@
+<div class="text-center">
+  <h1 mat-dialog-title>Edit Expense </h1>
+  <div mat-dialog-content>
+
+    <!-- form starting -->
+    <form [formGroup]="editExpenseForm">
+
+      <!-- enter expense name -->
+      <mat-form-field>
+        <mat-label>Enter Expense Name</mat-label>
+        <input matInput formControlName="ename">
+      </mat-form-field>
+
+      <br>
+
+      <!-- enter expense amount -->
+      <mat-form-field>
+        <mat-label>Enter Expense Amount</mat-label>
+        <input matInput formControlName="amount">
+      </mat-form-field>
+
+      <br>
+
+      <div class="row">
+
+        <div class="col-12 col-sm-6">
+          <h4>Expense payed by</h4>
+          <mat-form-field>
+            <mat-select (selectionChange)="selectfunction1($event.value)" formControlName="selectContributer">
+              <mat-option value="paidByYou">You</mat-option>
+              <mat-option value="paidByMultiple">Multiple</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- select which person is contributing to pay amount-->
+          <div formArrayName="contributer" *ngIf="dropValue1 == 'paidByMultiple'">
+            <div *ngFor="let data of contributerform.controls;let idx= index ">
+
+              <div [formGroupName]="idx">
+
+                <div class="row">
+                  <div class="col-12  col-sm-6 mt-4">
+                    {{data.value.name}}
+                  </div>
+                  <div class="col-6 col-sm-2">
+                    <mat-form-field style="width: 50px;">
+                      <input matInput formControlName="amount">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6 col-sm-4 mt-3">
+                    <input type="button" value="Remove" (click)="removeContributer(idx)" />
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <h4>Expense distributed</h4>
+          <mat-form-field>
+            <mat-select (selectionChange)="selectfunction2($event.value)" formControlName="selectDistributer">
+              <mat-option value="distributeEqual">Equally</mat-option>
+              <mat-option value="distributeUnequal">Unequeal</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- select person to equally distribute amount -->
+          <div formArrayName="distributer" *ngIf="dropValue2 == 'distributeUnequal'">
+            <div *ngFor="let data of distributerform.controls;let idx= index ">
+              <div [formGroupName]="idx">
+                <div class="row mt-4">
+                  <div class="col-6   ">
+                    {{data.value.name}}
+                  </div>
+                  <div class="col-6 ">
+                    <mat-checkbox formControlName="distributed"></mat-checkbox>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          <!--end of select person to equally distribute amount div -->
+        </div>
+      </div>
+
+    </form>
+    <!-- ending form -->
+
+  </div>
+  <div mat-dialog-actions style="margin-left: 30%;margin-top: 3px;color: white;">
+    <button mat-button (click)="onNoClick()" class="bg-danger">No Thanks</button>
+    <button mat-button [mat-dialog-close]="editExpenseForm.value" [disabled]="!editExpenseForm.valid"
+      class="ml-4 bg-success" cdkFocusInitial>Ok</button>
+  </div>
+
+</div>

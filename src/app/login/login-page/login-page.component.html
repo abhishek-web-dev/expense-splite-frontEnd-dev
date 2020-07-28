@@ -1,0 +1,33 @@
+<div class="main-div">
+    <!-- start login form -->
+    <div id="form-div">
+      <form id="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+        <h2 class="pb-2">Login</h2>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter Password"
+            formControlName="password">
+        </div>
+        <div>
+          <a (click)="forgotForm()" id="forgot-link">Forgot Password</a>
+        </div>
+        <!-- Login Button -->
+        <div class="row mt-2">
+          <div class="col-md-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success btn-lg" [disabled]="!loginForm.valid">Submit</button>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+    <!-- end of login form -->
+  
+  
+  </div>
+  
+  <!--button color : #48BB78 -->
+  

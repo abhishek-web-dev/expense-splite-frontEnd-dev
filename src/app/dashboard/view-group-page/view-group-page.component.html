@@ -1,0 +1,158 @@
+<div class="w-100 row">
+  <div class="col-12 col-sm-7">
+    <h1 class="text-white text-center mt-3">Group Name : {{groupName}}</h1>
+  </div>
+  <div class="col-12 col-sm-5 ">
+    <button type="button" class="btn btn-light mt-3 mr-2" (click)="openEditGroupDialog()">Edit Group</button>
+    <button type="button" class="btn btn-danger mt-3 " (click)="deleteGroup()">Delete Group</button>
+  </div>
+</div>
+
+<!-- split balance -->
+<div class="split-balance-div" *ngIf="splitArray.length !== 0">
+  <h1 class=" my-1">Split Balance</h1>
+  <ol class="mt-2">
+    <li *ngFor="let data1 of splitArray">
+      <b>{{data1.payerName | titlecase}}</b> has to pay <b>{{data1.amount | currency:'INR'}}</b> to
+      <b>{{data1.reciverName | titlecase}}</b>.
+    </li>
+  </ol>
+</div>
+
+<br>
+
+<!-- chat section is starting-->
+<section class="container ">
+
+  <mat-card id="chat-card">
+
+    <h2 class="pb-2 text-black mt-2 ml-2 " style="font-size:200%;">
+      Group Chat
+    </h2>
+
+    <form id="issue-form" [formGroup]="commentForm" (ngSubmit)="onComment(commentForm)">
+      <div class="form-row">
+        <div class="col-10">
+          <input type="text" class="form-control" id="title" formControlName="message" placeholder="Enter Message...">
+        </div>
+        <div class="col-2">
+          <button mat-raised-button class=" text-white px-4"
+            [ngStyle]="{'background-color':commentForm.valid ? '#2e7d32' : '#81c784'}"
+            [disabled]="!commentForm.valid">Send</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- comment message virtual scrolling start -->
+    <cdk-virtual-scroll-viewport itemSize="50" style="width: 100%;height: 320px;margin-top: 30px;">
+
+      <div *cdkVirtualFor="let data of allMessageData">
+        <div class="card text-white my-3"
+          style="background-color: #075E54;width: 96%;margin-left: auto;margin-right: auto;">
+          <div class="card-header"
+            style="font-size: 170%;color: #eeeeee;font-weight: 400;font-family: 'Merriweather', serif;font-style: italic;">
+            {{data.senderName}}
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p
+                style="color: #eeeeee;font-weight: 300;font-family: 'Merriweather', serif;font-style: italic;font-size: 110%;">
+                {{data.message}}</p>
+            </blockquote>
+          </div>
+          <div class="card-footer text-right mr-2">
+            <mat-icon class="material-icons mr-2" style="font-size: 110%;">access_time</mat-icon>
+            <small style="color: #C5C6C7;font-size: 115%;">
+              {{data.createdOn | amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+            </small>
+          </div>
+        </div>
+      </div>
+
+    </cdk-virtual-scroll-viewport>
+
+    <!-- Alert no more post -->
+    <div class="row pt-3">
+      <div class="col-md-12 d-flex justify-content-center">
+        <div class="text-black">
+          <button class="load-more-message" (click)="getMoreData()" mat-raised-button>
+            Load More Messages
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+  </mat-card>
+</section>
+
+<!-- expense section started -->
+<section>
+  <div class="w-100 row mt-4">
+    <div class="col-12 col-sm-8">
+      <h1 class="text-white text-center mt-3">Your all expense</h1>
+    </div>
+    <div class="col-12 col-sm-4 ">
+      <button type="button" class="btn btn-light mt-3" (click)="openCreateExpenseDialog()">Create Expense</button>
+    </div>
+  </div>
+  <!-- infinite scroll div for all expense -->
+  <div class="container mt-2" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()">
+
+
+    <div *ngFor="let data of allExpense" class="py-2">
+
+      <!-- all expense -->
+      <a [routerLink]="['../',data.groupId,'expense',data.expenseId]" style="text-decoration: none;">
+        <mat-card class="main-card">
+          <mat-card-header>
+            <div class="row">
+              <div class="col-3">
+                <div style="background-color: blueviolet;width: 50px;height: 50px;border-radius: 50%;">
+                  <div style="color: white;padding-top: 11px;margin-left: 18px;font-size: 20px;">
+                    {{data.ename[0].toUpperCase()}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-9">
+                <mat-card-title>{{data.ename}}</mat-card-title>
+                <mat-card-subtitle><i>Created By : {{data.creatorName}}</i></mat-card-subtitle>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <div class="text-right mr-3">
+            <mat-icon class="material-icons mr-2" style="font-size: 110%;">access_time</mat-icon>
+            <small style="font-size: 115%;">
+              {{data.createdOn | date:'medium'}}</small>
+          </div>
+        </mat-card>
+
+      </a>
+
+    </div>
+
+
+    <!-- sinner -->
+    <div style="margin-top: 2%;">
+      <div class="col">
+        <ngx-spinner bdOpacity=0.9 bdColor="" size="medium" color="#fff" type="ball-pulse-sync" [fullScreen]="false">
+          <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+      </div>
+    </div>
+
+    <!-- Alert no more post -->
+    <div class="row pb-5" *ngIf="!notEmptyPost">
+      <div class="col-md-12 d-flex justify-content-center">
+        <div class="text-black h6-alert alert-secondary p-2 "> No More Expense To Show</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- infinity scroll div end -->
+</section>
+
+
+<router-outlet></router-outlet>
