@@ -9,10 +9,10 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 })
 export class SocketService {
   // production
-  private url = "http://api.expense.abhiweb.xyz/expense";
+  //private url = "your server url";
 
   // development
-  //private url = "http://localhost:3000/expense";
+  private url = "http://localhost:3000/expense";
 
   private socket;
 
